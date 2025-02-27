@@ -38,6 +38,7 @@ if [ "$IS_LINUX" != true ]; then
     cp -r nodedist "$OUT_DIR"
     cp "packaging/Start Server.cmd" "$OUT_DIR"
     cp "packaging/Tools.cmd" "$OUT_DIR"
+    dotnet publish patcher/HitmanPatcher.UI/HitmanPatcher.UI.csproj -r win-x64 -c Release -p:PublishSingleFile=True --self-contained -p DebugType=none -p:EnableWindowsTargeting=True -o .
     cp PeacockPatcher.exe "$OUT_DIR"
 else
     dotnet publish patcher/HitmanPatcher.CLI/HitmanPatcher.CLI.csproj -r linux-x64 -c "Release - Linux" -f net8.0 -p:PublishTrimmed=True -p:PublishSingleFile=True --self-contained -p DebugType=none -p:IsLinux=true -o .
