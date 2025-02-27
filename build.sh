@@ -1,3 +1,3 @@
 #!/bin/sh
 
-yarn install && yarn build && sh ./packaging/ciAssemble.sh linux && sh ./packaging/ciAssemble.sh
+yarn install && yarn build && mkdir build && sh ./packaging/ciAssemble.sh linux # && sh ./packaging/ciAssemble.sh

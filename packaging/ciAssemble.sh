@@ -28,6 +28,10 @@ else
     OUT_DIR=Peacock-v"$VERSION"-linux
 fi
 
+if ls build; then
+    OUT_DIR=build/$OUT_DIR
+fi
+
 # generate options.ini
 node chunk0.js noop
 
