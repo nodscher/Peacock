@@ -1,6 +1,7 @@
 name: Patcher
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "v*", "master" ]
     paths: [ "patcher/**/*" ]
