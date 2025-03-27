@@ -162,19 +162,22 @@ export function getMaxProfileLevel(gameVersion: GameVersion): number {
 }
 
 /**
- * Calculates the level for the given XP based on XP_PER_LEVEL.
+ * Calculates the level for the given XP based on xpPerLevel (defaults to XP_PER_LEVEL).
  * Minimum level returned is 1.
  */
-export function levelForXp(xp: number): number {
-    return Math.max(1, Math.floor(xp / XP_PER_LEVEL) + 1)
+export function levelForXp(xp: number, xpPerLevel = XP_PER_LEVEL): number {
+    return Math.max(1, Math.floor(xp / xpPerLevel) + 1)
 }
 
 /**
- * Calculates the required XP for the given level based on XP_PER_LEVEL.
+ * Calculates the required XP for the given level based on xpPerLevel (defaults to XP_PER_LEVEL).
  * Minimum XP returned is 0.
  */
-export function xpRequiredForLevel(level: number): number {
-    return Math.max(0, (level - 1) * XP_PER_LEVEL)
+export function xpRequiredForLevel(
+    level: number,
+    xpPerLevel = XP_PER_LEVEL,
+): number {
+    return Math.max(0, (level - 1) * xpPerLevel)
 }
 
 export const EVERGREEN_LEVEL_INFO: number[] = [
@@ -587,6 +590,8 @@ export const nilUuid = "00000000-0000-0000-0000-000000000000"
 
 export const hitmapsUrl = "https://backend.rdil.rocks/partners/hitmaps/contract"
 
+export const vrTutorialId = "2d106f47-ee07-45f6-862e-77ae02d38725"
+
 export function isObjectiveActive(
     objective: MissionManifestObjective,
     doneObjectives: Set<RepositoryId>,
@@ -797,4 +802,42 @@ export function isTrueForEveryElement<Type>(
     }
 
     return true
+}
+
+const SERVER_VERSION_REGEX = /^(?<major>\d+)_(?<minor>\d+)_(?<build>\d+)$/
+const RESOURCES_VERSION_REGEX = /^(?<major>\d+)_(?<minor>\d+)$/
+
+export function extractServerVersion(
+    serverVersion: string | undefined,
+): ServerVersion | undefined {
+    if (!serverVersion) return
+
+    const versionParts = SERVER_VERSION_REGEX.exec(serverVersion)
+
+    if (versionParts?.groups) {
+        return {
+            _Major: parseInt(versionParts.groups.major, 10),
+            _Minor: parseInt(versionParts.groups.minor, 10),
+            _Build: parseInt(versionParts.groups.build, 10),
+            _Revision: 0,
+        }
+    }
+}
+
+// TODO: use me for validation on resources!!
+export function extractResourcesVersion(
+    resourcesServerVersion: string | undefined,
+): ServerVersion | undefined {
+    if (!resourcesServerVersion) return
+
+    const versionParts = RESOURCES_VERSION_REGEX.exec(resourcesServerVersion)
+
+    if (versionParts?.groups) {
+        return {
+            _Major: parseInt(versionParts.groups.major, 10),
+            _Minor: parseInt(versionParts.groups.minor, 10),
+            _Build: 0,
+            _Revision: 0,
+        }
+    }
 }
