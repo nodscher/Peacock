@@ -686,7 +686,7 @@ __metadata:
     "@radix-ui/react-slot": "npm:1.0.2"
   peerDependencies:
     "@types/react": "*"
-    "@types/react-dom": "*"
+    "@types/react-dom": "*"-force-d3d12
     react: ^16.8 || ^17.0 || ^18.0
     react-dom: ^16.8 || ^17.0 || ^18.0
   peerDependenciesMeta:

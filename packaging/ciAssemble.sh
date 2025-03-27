@@ -28,17 +28,24 @@ else
     OUT_DIR=Peacock-v"$VERSION"-linux
 fi
 
+if ls build; then
+    OUT_DIR=build/$OUT_DIR
+fi
+
 # generate options.ini
 node chunk0.js noop
 
 mkdir "$OUT_DIR"
 cp packaging/HOW_TO_USE.html "$OUT_DIR"
-cp PeacockPatcher.exe "$OUT_DIR"
 cp chunk*.js "$OUT_DIR"
 if [ "$IS_LINUX" != true ]; then
     cp -r nodedist "$OUT_DIR"
     cp "packaging/Start Server.cmd" "$OUT_DIR"
     cp "packaging/Tools.cmd" "$OUT_DIR"
+    cp PeacockPatcher.exe "$OUT_DIR"
+else
+    dotnet publish patcher/HitmanPatcher.CLI/HitmanPatcher.CLI.csproj -r linux-x64 -c "Release - Linux" -f net8.0 -p:PublishTrimmed=True -p:PublishSingleFile=True --self-contained -p DebugType=none -p:IsLinux=true -o .
+    cp PeacockPatcher.CLI "$OUT_DIR"
 fi
 cp LICENSE "$OUT_DIR"
 cp THIRDPARTYNOTICES.txt "$OUT_DIR"
