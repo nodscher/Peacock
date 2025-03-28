@@ -47,6 +47,7 @@ if [ "$IS_LINUX" != true ]; then
 else
     dotnet publish patcher/HitmanPatcher.CLI/HitmanPatcher.CLI.csproj -r linux-x64 -c "Release - Linux" -f net8.0 -p:PublishTrimmed=True -p:PublishSingleFile=True --self-contained -p DebugType=none -p:IsLinux=true -o build
     cp build/PeacockPatcher.CLI "$OUT_DIR"
+    cp packaging/launcher.sh "$OUT_DIR"
 fi
 cp LICENSE "$OUT_DIR"
 cp THIRDPARTYNOTICES.txt "$OUT_DIR"
