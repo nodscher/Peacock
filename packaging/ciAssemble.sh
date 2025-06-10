@@ -15,6 +15,8 @@
 #     You should have received a copy of the GNU Affero General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
+#!/bin/bash
+set -e
 
 VERSION=$(jq -r '.version' package.json)
 
@@ -36,6 +38,7 @@ OUT_DIR=build/$OUT_DIR
 # generate options.ini
 node chunk0.js noop
 
+[ -d "$OUT_DIR" ] && rm -rf "$OUT_DIR"
 mkdir "$OUT_DIR"
 cp packaging/HOW_TO_USE.html "$OUT_DIR"
 cp chunk*.js "$OUT_DIR"
@@ -45,7 +48,7 @@ if [ "$IS_LINUX" != true ]; then
     cp "packaging/Tools.cmd" "$OUT_DIR"
     cp PeacockPatcher.exe "$OUT_DIR"
 else
-    dotnet publish patcher/HitmanPatcher.CLI/HitmanPatcher.CLI.csproj -r linux-x64 -c "Release - Linux" -f net8.0 -p:PublishTrimmed=True -p:PublishSingleFile=True --self-contained -p DebugType=none -p:IsLinux=true -o build
+    dotnet publish patcher/HitmanPatcher.CLI/HitmanPatcher.CLI.csproj -r linux-x64 -c "Release - Linux" -p:PublishSingleFile=True --no-self-contained -p DebugType=none -p:IsLinux=true -o build
     cp build/PeacockPatcher.CLI "$OUT_DIR"
     cp packaging/launcher.sh "$OUT_DIR"
 fi
