@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -31,27 +31,9 @@ namespace HitmanPatcher
             trayDomains = new List<string>();
         }
 
-        private static string GetSavePath()
+        public static string GetSavePath()
         {
-            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\PeacockProject"))
-            {
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\PeacockProject");
-            }
-
-            string appData = Environment.GetFolderPath(Environment
-                .SpecialFolder
-                .ApplicationData);
-
-            string folder = $@"{appData}\PeacockProject\";
-            string config1 = folder + "peacock_patcher.conf";
-            string config2 = folder + "peacock_patcher2.conf";
-
-            if (File.Exists(config1))
-            {
-                File.Delete(config1);
-            }
-
-            return config2;
+            return "peacock_patcher.conf";
         }
 
         public void SaveToFile()
@@ -60,7 +42,7 @@ namespace HitmanPatcher
             lines.Add(string.Format("CustomConfigDomain={0}", patchOptions.CustomConfigDomain));
             lines.Add(string.Format("UseHttp={0}", patchOptions.UseHttp));
             lines.Add(string.Format("DisableForceDynamicResources={0}", patchOptions.DisableForceOfflineOnFailedDynamicResources));
-			lines.Add(string.Format("DarkModeEnabled={0}", darkModeEnabled));
+            lines.Add(string.Format("DarkModeEnabled={0}", darkModeEnabled));
             lines.Add(string.Format("startInTray={0}", startInTray));
             lines.Add(string.Format("minToTray={0}", minimizeToTray));
 
@@ -101,9 +83,9 @@ namespace HitmanPatcher
                             case "DisableForceDynamicResources":
                                 result.patchOptions.DisableForceOfflineOnFailedDynamicResources = bool.Parse(linecontents[1]);
                                 break;
-							case "DarkModeEnabled":
-								result.darkModeEnabled = bool.Parse(linecontents[1]);
-								break;
+                            case "DarkModeEnabled":
+                                result.darkModeEnabled = bool.Parse(linecontents[1]);
+                                break;
                             case "startInTray":
                                 result.startInTray = bool.Parse(linecontents[1]);
                                 break;
