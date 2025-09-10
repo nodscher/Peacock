@@ -31,27 +31,9 @@ namespace HitmanPatcher
             trayDomains = new List<string>();
         }
 
-        private static string GetSavePath()
+        public static string GetSavePath()
         {
-            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\PeacockProject"))
-            {
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\PeacockProject");
-            }
-
-            string appData = Environment.GetFolderPath(Environment
-                .SpecialFolder
-                .ApplicationData);
-
-            string folder = $@"{appData}\PeacockProject\";
-            string config1 = folder + "peacock_patcher.conf";
-            string config2 = folder + "peacock_patcher2.conf";
-
-            if (File.Exists(config1))
-            {
-                File.Delete(config1);
-            }
-
-            return config2;
+            return "peacock_patcher.conf";
         }
 
         public void SaveToFile()

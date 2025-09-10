@@ -45,6 +45,9 @@ namespace HitmanPatcher
 
         static bool CheckForAdmin()
         {
+#if LINUX
+            return false;
+#else
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
             WindowsPrincipal principal = new WindowsPrincipal(identity);
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
